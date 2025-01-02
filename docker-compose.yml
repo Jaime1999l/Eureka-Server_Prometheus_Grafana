@@ -1,11 +1,11 @@
 services:
 
-  eureka-server_prometheus_grafana:
+  eureka-server:
     build:
       context: ./  # Asumiendo que el Dockerfile está en la raíz de este repositorio
     ports:
       - "8762:8761"
-    container_name: eureka-server_prometheus_grafana
+    container_name: eureka-server
     networks:
       - backend-network
     environment:
@@ -13,7 +13,7 @@ services:
       - eureka.server.enable-self-preservation=false
       - eureka.server.eviction-interval-timer-in-ms=5000
       - eureka.server.renewal-strategy=true
-      - EUREKA_SERVER_URL=http://eureka-server_prometheus_grafana:8761/eureka/  # URL para Docker
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/  # URL para Docker
 
   prometheus:
     image: prom/prometheus
