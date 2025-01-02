@@ -1,0 +1,43 @@
+spring:
+
+  application:
+    name: eureka-servidor
+
+server:
+  port: 8761
+
+jwt:
+  secret: securesecretkey
+
+error:
+  handling:
+    http-status-in-json-response: true
+    exception-logging: NO_LOGGING
+    full-stacktrace-http-statuses: 5xx
+    log-levels:
+      5xx: ERROR
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG
+    com.myproyect.springboot: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}  # Valor dinámico basado en la variable de entorno
+    register-with-eureka: false  # Desactiva el auto-registro en sí mismo
+    fetch-registry: false        # Desactiva el intento de obtener el registro de otras instancias
+
+metrics:
+  export:
+    prometheus:
+      enabled: true
