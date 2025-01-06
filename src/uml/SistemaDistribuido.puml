@@ -1,0 +1,81 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 150
+skinparam linetype ortho
+skinparam packageStyle square
+skinparam wrapWidth 200
+
+' Paquete de infraestructura
+package "Infraestructura Central" {
+    node "Eureka Service Registry" as eureka
+    node "Prometheus" as prometheus
+    node "Grafana" as grafana
+}
+
+' Paquete de mensajería
+package "Mensajería (RabbitMQ)" {
+    queue "Cola Pública" as publicQueue
+    queue "Cola Privada" as privateQueue
+}
+
+' Paquete de microservicios
+package "Microservicios" {
+    node "Chat Público" as publicChat {
+        [API Pública]
+        [Gestor de Mensajes Públicos]
+    }
+
+    node "Chat Privado" as privateChat {
+        [API Privada]
+        [Gestor de Mensajes Privados]
+    }
+}
+
+' Paquete de clientes
+package "Clientes" {
+    node "Cliente 1" as client1 {
+        [Cifrado AES]
+        [Claves RSA (Pública y Privada)]
+    }
+    node "Cliente 2" as client2 {
+        [Cifrado AES]
+        [Claves RSA (Pública y Privada)]
+    }
+    node "Cliente 3" as client3 {
+        [Cifrado AES]
+        [Claves RSA (Pública y Privada)]
+    }
+    node "Cliente 4" as client4 {
+        [Cifrado AES]
+        [Claves RSA (Pública y Privada)]
+    }
+}
+
+' Relaciones
+eureka --> publicChat : Registro
+eureka --> privateChat : Registro
+eureka --> client1 : Registro
+eureka --> client2 : Registro
+eureka --> client3 : Registro
+eureka --> client4 : Registro
+
+publicChat --> publicQueue : Publicar mensajes públicos
+privateChat --> privateQueue : Establecer ruta de mensajes privados - [Cifrado AES]
+
+' Todos los clientes pueden interactuar con los chats
+client1 --> privateChat
+client2 --> privateChat
+client3 --> privateChat
+client4 --> privateChat
+
+client1 --> publicChat
+client2 --> publicChat
+client3 --> publicChat
+client4 --> publicChat
+
+publicChat --> prometheus : Exponer métricas
+privateChat --> prometheus : Exponer métricas
+prometheus --> grafana : Visualización de métricas
+
+@enduml
