@@ -12,6 +12,6 @@ scrape_configs:
   - job_name: "messenger-client-1"
     metrics_path: "/actuator/prometheus"
     static_configs:
-      - targets: [ "messenger-client-1:8081" ]
+      - targets: [ "messenger-client-1:8091" ]
         labels:
           service: "messenger-client-1"
