@@ -8,3 +8,10 @@ scrape_configs:
       - targets: ["eureka-server:8761"]
         labels:
           service: "eureka-server"
+
+  - job_name: "messenger-client-1"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: [ "messenger-client-1:8081" ]
+        labels:
+          service: "messenger-client-1"
