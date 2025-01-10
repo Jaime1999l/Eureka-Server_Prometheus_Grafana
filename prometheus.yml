@@ -8,3 +8,45 @@ scrape_configs:
       - targets: ["eureka-server:8761"]
         labels:
           service: "eureka-server"
+
+  - job_name: "messenger-client-1"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["messenger-client-1:8091"]
+        labels:
+          service: "messenger-client-1"
+
+  - job_name: "messenger-client-2"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["messenger-client-2:8082"]
+        labels:
+          service: "messenger-client-2"
+
+  - job_name: "messenger-client-3"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["messenger-client-3:8083"]
+        labels:
+          service: "messenger-client-3"
+
+  - job_name: "messenger-client-4"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["messenger-client-4:8084"]
+        labels:
+          service: "messenger-client-4"
+
+  - job_name: "chat-publico"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["chat-publico:8085"]
+        labels:
+          service: "chat-publico"
+
+  - job_name: "chat-privado"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["chat-privado:8086"]
+        labels:
+          service: "chat-privado"
